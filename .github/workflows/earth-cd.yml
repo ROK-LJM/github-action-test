@@ -54,3 +54,12 @@ jobs:
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
           wait_for_environment_recovery: 180 # default wait time은 30초이며, 필자의 EB가 느려서 180초로 지정했습니다(지정 안하면 간혹 timeout 발생).
+          
+
+      - name: Start MySQL
+        uses: samin/mysql-action@v1.3
+        with:
+          character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+          mysql database: 'board' # Optional, default value is "test". The specified database which will be create
+          mysql user: 'root' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Of course you can use secrets, too
+          mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
